@@ -1,12 +1,18 @@
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-const goodsModel = require('../model/goodsModel')
-const inventoriesModel = require('../model/inventoriesModel')
-const storesModel = require('../model/storesModel')
 
-// ⚠️ propietary code, don't change it ⚠️
-// this code will create db.json automatically if your folder doesn't have one
-// courious? 👀 search for "IIFE function"
+const categoryModel = require('../model/categoryModel')
+const customerModel = require('../model/customerModel')
+const orderDetailModel = require('../model/orderDetailModel')
+const orderModel = require('../model/orderModel')
+const productCategoryModel = require('../model/productCategoryModel')
+const productImageModel = require('../model/productImageModel')
+const productModel = require('../model/productModel')
+const stockModel = require('../model/stockModel')
+const storeListingModel = require('../model/storeListingModel')
+const storeModel = require('../model/storeModel')
+
+// === LowDB configurations ===
 let db;
 (async () => {
   try {
@@ -21,9 +27,16 @@ let db;
     const adapter = new FileSync('db.json')
     db = low(adapter)
     db.defaults({
-      stores: [],
-      inventories: [],
-      goods: []
+      categories: [],
+      customers: [],
+      orderDetails: [],
+      orders: [],
+      productCategories: [],
+      productImages: [],
+      products: [],
+      stocks: [],
+      storeListings: [],
+      stores: []
     })
       .write()
   } catch (error) {
@@ -31,6 +44,7 @@ let db;
   }
 })()
 
+// === Modeling functions ===
 function shapeObject(input, model) {
   const result = {}
   const modelCounter = model.length
@@ -47,6 +61,7 @@ function shapeObject(input, model) {
   return result
 }
 
+// === CRUD functions ===
 /**
  * Get data
  * @param {String} tableName table name
@@ -73,14 +88,35 @@ function get(tableName, query) {
 function add(tableName, body) {
   let shapedBody
 
-  if (tableName == 'goods') {
-    shapedBody = shapeObject(body, goodsModel)
+  if (tableName == 'categories') {
+    shapedBody = shapeObject(body, categoryModel)
   }
-  if (tableName == 'inventories') {
-    shapedBody = shapeObject(body, inventoriesModel)
+  if (tableName == 'customers') {
+    shapedBody = shapeObject(body, customerModel)
   }
-  if (tableName == 'stores') {
-    shapedBody = shapeObject(body, storesModel)
+  if (tableName == 'orderDetails') {
+    shapedBody = shapeObject(body, orderDetailModel)
+  }
+  if (tableName == 'orders') {
+    shapedBody = shapeObject(body, orderModel)
+  }
+  if (tableName == 'productCategories') {
+    shapedBody = shapeObject(body, productCategoryModel)
+  }
+  if (tableName == 'productImages') {
+    shapedBody = shapeObject(body, productImageModel)
+  }
+  if (tableName == 'products') {
+    shapedBody = shapeObject(body, productModel)
+  }
+  if (tableName == 'stocks') {
+    shapedBody = shapeObject(body, stockModel)
+  }
+  if (tableName == 'storeListings') {
+    shapedBody = shapeObject(body, storeListingModel)
+  }
+  if (tableName == 'Stores') {
+    shapedBody = shapeObject(body, storeModel)
   }
 
   if (!shapedBody) {
