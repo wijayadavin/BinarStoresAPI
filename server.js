@@ -39,7 +39,7 @@ const getStores = require('./routes/stores/getStores')
 // === app setup ===
 const app = express()
 app.use(bodyParser.json())
-
+app.set('view engine', 'ejs')
 
 // === use imported routes ===
 app.use(rootRoute)

@@ -1,17 +1,14 @@
-// ⚠️ Do not change this route ⚠️
-// Structure your route relative to the route real path, like
-// routes
-//    ᴸ notes
-//        ᴸ getNotes.js (handles GET request in '/notes')
-
+// === Setup ===
 const express = require('express')
-const app = express.Router()
+const router = express.Router()
+
 const db = require('../controller/dbController')
 
-app.get('/', (req, res) => {
-  res.send("Hello world!")
+
+// === a router to render index.ejs ===
+router.get('/', (req, res) => {
+  const stores = db.get('customers')
+  res.status(200).render('root', { "stores": stores });
 })
 
-// hello world! 
-
-module.exports = app
+module.exports = router

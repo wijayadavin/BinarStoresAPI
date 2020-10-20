@@ -12,6 +12,7 @@ const stockModel = require('../model/stockModel')
 const storeListingModel = require('../model/storeListingModel')
 const storeModel = require('../model/storeModel')
 
+
 // === LowDB configurations ===
 let db;
 (async () => {
@@ -118,7 +119,6 @@ function add(tableName, body) {
   if (tableName == 'Stores') {
     shapedBody = shapeObject(body, storeModel)
   }
-
   if (!shapedBody) {
     return false
   }
@@ -163,6 +163,7 @@ function removeAll(tableName) {
     .remove({})
     .write()
 }
+
 
 module.exports = {
   get,
