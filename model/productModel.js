@@ -5,5 +5,6 @@ module.exports = [
   "name",
   "author",
   "publisher",
-  "price"
+  "price",
+  "productImageID"
 ]
