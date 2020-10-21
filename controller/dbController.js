@@ -2,7 +2,6 @@ const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
 const categoryModel = require('../model/categoryModel')
-const customerModel = require('../model/customerModel')
 const orderDetailModel = require('../model/orderDetailModel')
 const orderModel = require('../model/orderModel')
 const productCategoryModel = require('../model/productCategoryModel')
@@ -11,6 +10,7 @@ const productModel = require('../model/productModel')
 const stockModel = require('../model/stockModel')
 const storeListingModel = require('../model/storeListingModel')
 const storeModel = require('../model/storeModel')
+const usersModel = require('../model/usersModel')
 
 // === LowDB configurations ===
 let db;
@@ -28,7 +28,6 @@ let db;
     db = low(adapter)
     db.defaults({
       categories: [],
-      customers: [],
       orderDetails: [],
       orders: [],
       productCategories: [],
@@ -36,7 +35,8 @@ let db;
       products: [],
       stocks: [],
       storeListings: [],
-      stores: []
+      stores: [],
+      users: []
     })
       .write()
   } catch (error) {
@@ -91,9 +91,6 @@ function add(tableName, body) {
   if (tableName == 'categories') {
     shapedBody = shapeObject(body, categoryModel)
   }
-  if (tableName == 'customers') {
-    shapedBody = shapeObject(body, customerModel)
-  }
   if (tableName == 'orderDetails') {
     shapedBody = shapeObject(body, orderDetailModel)
   }
@@ -115,10 +112,12 @@ function add(tableName, body) {
   if (tableName == 'storeListings') {
     shapedBody = shapeObject(body, storeListingModel)
   }
-  if (tableName == 'Stores') {
+  if (tableName == 'stores') {
     shapedBody = shapeObject(body, storeModel)
   }
-
+  if (tableName == 'users') {
+    shapedBody = shapeObject(body, usersModel)
+  }
   if (!shapedBody) {
     return false
   }
